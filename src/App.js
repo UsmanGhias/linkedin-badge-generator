@@ -66,17 +66,63 @@ function App() {
     }
   ];
 
-  // Initialize usage count from localStorage (for demo purposes - in production this would be from a database)
+  // Initialize usage count with auto-incrementing simulation
   useEffect(() => {
-    const savedCount = localStorage.getItem('badgeGeneratorUsage');
-    if (savedCount) {
-      setUsageCount(parseInt(savedCount));
-    } else {
-      // Set a realistic starting number for demo - this simulates global usage
-      const baseCount = 24;
-      setUsageCount(baseCount);
-      localStorage.setItem('badgeGeneratorUsage', baseCount.toString());
-    }
+    const initializeCounter = () => {
+      const now = Date.now();
+      const lastUpdate = localStorage.getItem('badgeGeneratorLastUpdate');
+      const currentCount = localStorage.getItem('badgeGeneratorUsage');
+      
+      let count = 24; // Starting number
+      
+      if (currentCount) {
+        count = parseInt(currentCount);
+      }
+      
+      if (lastUpdate) {
+        const hoursSinceLastUpdate = (now - parseInt(lastUpdate)) / (1000 * 60 * 60);
+        
+        if (hoursSinceLastUpdate >= 1) {
+          // Increment by random number between 3-7 every hour
+          const increment = Math.floor(Math.random() * 5) + 3; // 3 to 7
+          count += increment;
+          
+          // Update storage
+          localStorage.setItem('badgeGeneratorUsage', count.toString());
+          localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
+        }
+      } else {
+        // First time - set initial values
+        localStorage.setItem('badgeGeneratorUsage', count.toString());
+        localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
+      }
+      
+      setUsageCount(count);
+    };
+    
+    initializeCounter();
+    
+    // Check for updates every 5 minutes
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const lastUpdate = localStorage.getItem('badgeGeneratorLastUpdate');
+      
+      if (lastUpdate) {
+        const hoursSinceLastUpdate = (now - parseInt(lastUpdate)) / (1000 * 60 * 60);
+        
+        if (hoursSinceLastUpdate >= 1) {
+          const currentCount = parseInt(localStorage.getItem('badgeGeneratorUsage') || '24');
+          const increment = Math.floor(Math.random() * 5) + 3; // 3 to 7
+          const newCount = currentCount + increment;
+          
+          localStorage.setItem('badgeGeneratorUsage', newCount.toString());
+          localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
+          setUsageCount(newCount);
+        }
+      }
+    }, 5 * 60 * 1000); // Check every 5 minutes
+    
+    return () => clearInterval(interval);
   }, []);
 
   const handleImageUpload = (event) => {
@@ -267,11 +313,6 @@ function App() {
         link.download = 'linkedin-badge.png';
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
-        
-        // Increment usage count (global counter)
-        const newCount = usageCount + 1;
-        setUsageCount(newCount);
-        localStorage.setItem('badgeGeneratorUsage', newCount.toString());
         
         // Show portfolio modal
         setShowPortfolio(true);
