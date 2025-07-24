@@ -700,34 +700,34 @@ function App() {
             </div>
 
             {/* Enhanced Tips Section */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-blue-900 mb-3 flex items-center">
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
                 <Award className="h-4 w-4 mr-2" />
                 Pro Tips for Best Results
               </h3>
-              <ul className="text-sm text-blue-800 space-y-2">
+              <ul className="text-sm text-gray-800 space-y-2">
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>High-quality photo:</strong> Use clear, well-lit images with good resolution (at least 400x400px)</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>Face positioning:</strong> Center your face in the frame for the best crop results</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>Professional attire:</strong> Wear business-appropriate clothing for a polished look</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>Background:</strong> Choose a clean, uncluttered background (white works best for LinkedIn)</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>Lighting:</strong> Ensure good lighting on your face to avoid shadows</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
+                  <span className="text-gray-600 mr-2">•</span>
                   <span><strong>Expression:</strong> Use a professional, friendly expression that matches your industry</span>
                 </li>
               </ul>
