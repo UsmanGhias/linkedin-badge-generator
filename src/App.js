@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Users, Star, Award, Zap } from 'lucide-react';
+import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Users, Star, Award, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -14,6 +14,7 @@ function App() {
   const [showCharity, setShowCharity] = useState(false);
   const [backgroundType, setBackgroundType] = useState('white'); // white or transparent
   const [usageCount, setUsageCount] = useState(0);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const canvasRef = useRef(null);
   const svgRef = useRef(null);
 
@@ -286,6 +287,10 @@ function App() {
     setBadgeColor(preset.color);
   };
 
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Social Links */}
@@ -342,24 +347,6 @@ function App() {
       </div>
 
       <div className="container mx-auto px-4 py-6 max-w-6xl">
-        {/* Stats Banner */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-4 mb-8 text-white">
-          <div className="flex flex-wrap items-center justify-center space-x-8 text-center">
-            <div className="flex items-center space-x-2">
-              <Zap className="h-5 w-5" />
-              <span className="font-semibold">{usageCount.toLocaleString()}+ Badges Created</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5" />
-              <span className="font-semibold">100% Free</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Award className="h-5 w-5" />
-              <span className="font-semibold">Professional Quality</span>
-            </div>
-          </div>
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Left Panel - Controls */}
           <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -694,29 +681,84 @@ function App() {
               )}
             </div>
 
-            {/* Simple Tips */}
+            {/* Stats Section */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+              <div className="flex flex-wrap items-center justify-center space-x-6 text-center">
+                <div className="flex items-center space-x-2">
+                  <Zap className="h-4 w-4 text-blue-600" />
+                  <span className="font-semibold text-sm">{usageCount.toLocaleString()}+ Badges Created</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Star className="h-4 w-4 text-yellow-500" />
+                  <span className="font-semibold text-sm">100% Free</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Award className="h-4 w-4 text-purple-600" />
+                  <span className="font-semibold text-sm">Professional Quality</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Enhanced Tips Section */}
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-medium text-blue-900 mb-2">Tips for best results:</h3>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Use a clear, high-quality profile photo</li>
-                <li>• Face should be centered and well-lit</li>
-                <li>• Square images work best</li>
-                <li>• White background is recommended for LinkedIn</li>
+              <h3 className="font-semibold text-blue-900 mb-3 flex items-center">
+                <Award className="h-4 w-4 mr-2" />
+                Pro Tips for Best Results
+              </h3>
+              <ul className="text-sm text-blue-800 space-y-2">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>High-quality photo:</strong> Use clear, well-lit images with good resolution (at least 400x400px)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Face positioning:</strong> Center your face in the frame for the best crop results</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Professional attire:</strong> Wear business-appropriate clothing for a polished look</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Background:</strong> Choose a clean, uncluttered background (white works best for LinkedIn)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Lighting:</strong> Ensure good lighting on your face to avoid shadows</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Expression:</strong> Use a professional, friendly expression that matches your industry</span>
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* FAQ Section */}
+        {/* Dropdown FAQ Section */}
         <div className="mt-12 bg-white rounded-lg shadow-sm border p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Frequently Asked Questions
           </h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="max-w-3xl mx-auto space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-4">
-                <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                <p className="text-gray-600 text-sm">{faq.answer}</p>
+              <div key={index} className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-medium text-gray-900">{faq.question}</span>
+                  {openFaqIndex === index ? (
+                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  )}
+                </button>
+                {openFaqIndex === index && (
+                  <div className="px-4 pb-3 text-gray-600 text-sm border-t border-gray-100 pt-3">
+                    {faq.answer}
+                  </div>
+                )}
               </div>
             ))}
           </div>
