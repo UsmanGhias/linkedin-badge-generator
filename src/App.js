@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Users, Star, Award, Zap, ChevronDown, ChevronUp, Wifi, WifiOff } from 'lucide-react';
+import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Star, Award, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -13,7 +13,6 @@ function App() {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showCharity, setShowCharity] = useState(false);
   const [backgroundType, setBackgroundType] = useState('white'); // white or transparent
-  const [isOnline, setIsOnline] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const canvasRef = useRef(null);
   const svgRef = useRef(null);
@@ -65,21 +64,6 @@ function App() {
       answer: "While designed for LinkedIn, you can use these badges on other professional platforms like Twitter, Facebook, or your personal website."
     }
   ];
-
-  // Simple online status check
-  useEffect(() => {
-    const checkOnlineStatus = () => {
-      setIsOnline(navigator.onLine);
-    };
-
-    window.addEventListener('online', checkOnlineStatus);
-    window.addEventListener('offline', checkOnlineStatus);
-    
-    return () => {
-      window.removeEventListener('online', checkOnlineStatus);
-      window.removeEventListener('offline', checkOnlineStatus);
-    };
-  }, []);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -311,14 +295,8 @@ function App() {
             {/* Social Links */}
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 text-sm text-gray-600">
-                {isOnline ? (
-                  <Wifi className="h-4 w-4 text-green-500" />
-                ) : (
-                  <WifiOff className="h-4 w-4 text-red-500" />
-                )}
-                <span className={isOnline ? "text-green-600" : "text-red-600"}>
-                  {isOnline ? "Live" : "Offline"}
-                </span>
+                <Star className="h-4 w-4 text-yellow-500" />
+                <span className="text-gray-700 font-medium">Free & Easy to Use</span>
               </div>
               <div className="flex space-x-2">
                 <a
@@ -694,7 +672,7 @@ function App() {
               <div className="flex flex-wrap items-center justify-center space-x-6 text-center">
                 <div className="flex items-center space-x-2">
                   <Zap className="h-4 w-4 text-blue-600" />
-                  <span className="font-semibold text-sm">Professional Quality</span>
+                  <span className="font-semibold text-sm">Lightning Fast</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Star className="h-4 w-4 text-yellow-500" />
@@ -702,7 +680,7 @@ function App() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Award className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold text-sm">LinkedIn Ready</span>
+                  <span className="font-semibold text-sm">Premium Quality</span>
                 </div>
               </div>
             </div>
