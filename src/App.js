@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Users, Star, Award, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import { Upload, Download, Palette, Type, Heart, RotateCcw, Crop, X, ExternalLink, Github, Linkedin, MessageCircle, Users, Star, Award, Zap, ChevronDown, ChevronUp, Wifi, WifiOff } from 'lucide-react';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -13,7 +13,7 @@ function App() {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showCharity, setShowCharity] = useState(false);
   const [backgroundType, setBackgroundType] = useState('white'); // white or transparent
-  const [usageCount, setUsageCount] = useState(0);
+  const [isOnline, setIsOnline] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const canvasRef = useRef(null);
   const svgRef = useRef(null);
@@ -66,63 +66,19 @@ function App() {
     }
   ];
 
-  // Initialize usage count with auto-incrementing simulation
+  // Simple online status check
   useEffect(() => {
-    const initializeCounter = () => {
-      const now = Date.now();
-      const lastUpdate = localStorage.getItem('badgeGeneratorLastUpdate');
-      const currentCount = localStorage.getItem('badgeGeneratorUsage');
-      
-      let count = 24; // Starting number
-      
-      if (currentCount) {
-        count = parseInt(currentCount);
-      }
-      
-      if (lastUpdate) {
-        const hoursSinceLastUpdate = (now - parseInt(lastUpdate)) / (1000 * 60 * 60);
-        
-        if (hoursSinceLastUpdate >= 1) {
-          // Increment by random number between 3-7 every hour
-          const increment = Math.floor(Math.random() * 5) + 3; // 3 to 7
-          count += increment;
-          
-          // Update storage
-          localStorage.setItem('badgeGeneratorUsage', count.toString());
-          localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
-        }
-      } else {
-        // First time - set initial values
-        localStorage.setItem('badgeGeneratorUsage', count.toString());
-        localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
-      }
-      
-      setUsageCount(count);
+    const checkOnlineStatus = () => {
+      setIsOnline(navigator.onLine);
     };
+
+    window.addEventListener('online', checkOnlineStatus);
+    window.addEventListener('offline', checkOnlineStatus);
     
-    initializeCounter();
-    
-    // Check for updates every 5 minutes
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const lastUpdate = localStorage.getItem('badgeGeneratorLastUpdate');
-      
-      if (lastUpdate) {
-        const hoursSinceLastUpdate = (now - parseInt(lastUpdate)) / (1000 * 60 * 60);
-        
-        if (hoursSinceLastUpdate >= 1) {
-          const currentCount = parseInt(localStorage.getItem('badgeGeneratorUsage') || '24');
-          const increment = Math.floor(Math.random() * 5) + 3; // 3 to 7
-          const newCount = currentCount + increment;
-          
-          localStorage.setItem('badgeGeneratorUsage', newCount.toString());
-          localStorage.setItem('badgeGeneratorLastUpdate', now.toString());
-          setUsageCount(newCount);
-        }
-      }
-    }, 5 * 60 * 1000); // Check every 5 minutes
-    
-    return () => clearInterval(interval);
+    return () => {
+      window.removeEventListener('online', checkOnlineStatus);
+      window.removeEventListener('offline', checkOnlineStatus);
+    };
   }, []);
 
   const handleImageUpload = (event) => {
@@ -355,8 +311,14 @@ function App() {
             {/* Social Links */}
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 text-sm text-gray-600">
-                <Users className="h-4 w-4" />
-                <span>{usageCount.toLocaleString()} badges created</span>
+                {isOnline ? (
+                  <Wifi className="h-4 w-4 text-green-500" />
+                ) : (
+                  <WifiOff className="h-4 w-4 text-red-500" />
+                )}
+                <span className={isOnline ? "text-green-600" : "text-red-600"}>
+                  {isOnline ? "Live" : "Offline"}
+                </span>
               </div>
               <div className="flex space-x-2">
                 <a
@@ -732,7 +694,7 @@ function App() {
               <div className="flex flex-wrap items-center justify-center space-x-6 text-center">
                 <div className="flex items-center space-x-2">
                   <Zap className="h-4 w-4 text-blue-600" />
-                  <span className="font-semibold text-sm">{usageCount.toLocaleString()}+ Badges Created</span>
+                  <span className="font-semibold text-sm">Professional Quality</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Star className="h-4 w-4 text-yellow-500" />
@@ -740,7 +702,7 @@ function App() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Award className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold text-sm">Professional Quality</span>
+                  <span className="font-semibold text-sm">LinkedIn Ready</span>
                 </div>
               </div>
             </div>
