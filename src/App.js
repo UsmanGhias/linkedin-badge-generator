@@ -88,10 +88,14 @@ function App() {
     const img = new Image();
 
     img.onload = () => {
-      // Set canvas size for high-quality LinkedIn badge
-      const canvasSize = 400;
+      // Set canvas size for FULL HD LinkedIn badge
+      const canvasSize = 1080; // Increased from 400 to 1080 for HD quality
       canvas.width = canvasSize;
       canvas.height = canvasSize;
+
+      // Enable high-quality image rendering
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
 
       // Clear canvas and set background
       ctx.clearRect(0, 0, canvasSize, canvasSize);
@@ -103,7 +107,7 @@ function App() {
 
       const centerX = canvasSize / 2;
       const centerY = canvasSize / 2;
-      const radius = canvasSize / 2 - 20;
+      const radius = canvasSize / 2 - 54; // Adjusted for 1080px (was 20 for 400px)
 
       // Create circular clipping path for profile image
       ctx.save();
@@ -152,7 +156,7 @@ function App() {
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
       ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 5; // Increased from 2 for 1080px canvas
       ctx.stroke();
     };
 
@@ -181,11 +185,15 @@ function App() {
       // Create SVG image
       const svgImg = new Image();
       svgImg.onload = () => {
-        // Set canvas size
-        const canvasSize = 400;
+        // Set canvas size for FULL HD download
+        const canvasSize = 1080; // Increased from 400 to 1080 for HD quality
         canvas.width = canvasSize;
         canvas.height = canvasSize;
         
+        // Enable high-quality image rendering
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
         // Clear and set background
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         if (backgroundType === 'white') {
@@ -196,7 +204,7 @@ function App() {
         // Draw profile image
         const centerX = canvasSize / 2;
         const centerY = canvasSize / 2;
-        const radius = canvasSize / 2 - 20;
+        const radius = canvasSize / 2 - 54; // Adjusted for 1080px HD canvas
         
         // Create circular clipping for profile image
         ctx.save();
@@ -242,7 +250,7 @@ function App() {
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 5; // Increased from 2 for 1080px HD canvas
         ctx.stroke();
         
         // Draw SVG badge overlay
@@ -608,6 +616,7 @@ function App() {
                         ref={svgRef}
                         width="280"
                         height="280"
+                        viewBox="0 0 1080 1080"
                         className="absolute top-0 left-0 pointer-events-none"
                         xmlns="http://www.w3.org/2000/svg"
                         style={{ position: 'absolute', top: 0, left: 0 }}
@@ -615,10 +624,10 @@ function App() {
                         <defs>
                           <linearGradient
                             id="profileRingGradient"
-                            x1="140"
-                            y1="220"
-                            x2="180"
-                            y2="160"
+                            x1="540"
+                            y1="850"
+                            x2="700"
+                            y2="620"
                             gradientUnits="userSpaceOnUse"
                           >
                             <stop stopColor={badgeColor}></stop>
@@ -626,21 +635,21 @@ function App() {
                           </linearGradient>
                         </defs>
                         <path
-                          d="M 140 140
-                            m -110, 0
-                            a 110,110 0 1,0 220,0
-                            a 110,110 0 1,0 -220,0"
+                          d="M 540 540
+                            m -425, 0
+                            a 425,425 0 1,0 850,0
+                            a 425,425 0 1,0 -850,0"
                           id="profileRingTextPath"
                           fill="none"
                           stroke="url(#profileRingGradient)"
-                          strokeWidth="40"
+                          strokeWidth="154"
                         ></path>
-                        <text dy="0.3em" fontSize={`${fontSize}px`}>
+                        <text dy="0.3em" fontSize={`${fontSize * 3.857}px`}>
                           <textPath 
                             style={{
                               fill: textColor,
                               fontWeight: '700',
-                              letterSpacing: '1px',
+                              letterSpacing: '3px',
                               fontFamily: 'sans-serif'
                             }} 
                             startOffset="2%" 
@@ -653,7 +662,7 @@ function App() {
                     </div>
                   </div>
                   <p className="text-xs text-gray-500 text-center mt-2">
-                    400x400px • Ready for LinkedIn
+                    1080x1080px • Full HD • Ready for LinkedIn
                   </p>
                 </div>
               ) : (
