@@ -105,7 +105,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - **GitHub**: [@usmanghias](https://github.com/usmanghias)
 - **LinkedIn**: [Muhammad Usman Khan](https://linkedin.com/in/m-UsmanGhias)
 - **WhatsApp**: [03126912440](https://wa.me/03126912440)
-- **Portfolio**: [usman.codcrafters.org](https://usman.codcrafters.org)
+- **Portfolio**: [usmanghias.co.uk](https://usmanghias.co.uk)
 
 ## 💝 Charity Support
 

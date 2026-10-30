@@ -826,12 +826,12 @@ function App() {
                   <div className="text-center">
                     <p className="font-semibold text-blue-800 mb-2 text-sm sm:text-base">Portfolio</p>
                     <a 
-                      href="https://usman.codcrafters.org" 
+                      href="https://usmanghias.co.uk" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800 font-medium text-sm sm:text-lg block break-all"
                     >
-                      usman.codcrafters.org
+                      usmanghias.co.uk
                     </a>
                     <p className="text-xs sm:text-sm text-blue-700 mt-2">
                       Web Development • React • Node.js • Full Stack
@@ -843,7 +843,7 @@ function App() {
               {/* Footer */}
               <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 p-4 sm:p-6 border-t bg-gray-50 sticky bottom-0">
                 <a
-                  href="https://usman.codcrafters.org"
+                  href="https://usmanghias.co.uk"
           target="_blank"
           rel="noopener noreferrer"
                   className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center space-x-2 text-sm sm:text-base"
